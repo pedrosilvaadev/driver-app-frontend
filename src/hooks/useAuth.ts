@@ -1,18 +1,36 @@
-import { useAuthStore } from '@/store/authStore';
-import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useMutation } from "@tanstack/react-query";
+import { useAuthStore } from "../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import { login as loginApi } from "@/api/auth";
 
-export function useAuth(pathname: string) {
-  const { isAuthenticated } = useAuthStore();
+export const useAuth = () => {
+  const { token, user, setToken, clear, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  useEffect(() => {
-    if (!isAuthenticated && location.pathname !== '/login') {
-      navigate('/login', { replace: true });
-    } else {
-      navigate(pathname, { replace: true });
-    }
+  const loginMutation = useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      loginApi(email, password),
+    onSuccess: (data) => {
+      setToken(data.access_token);
+      navigate("/rides");
+    },
+    onError: (error) => {
+      console.error("Login failed:", error);
+    },
+  });
 
-  }, [isAuthenticated, navigate, location.pathname, pathname]);
-}
+  const logout = () => {
+    clear();
+    navigate("/login");
+  };
+
+  return {
+    token,
+    user,
+    isAuthenticated: isAuthenticated(),
+    login: loginMutation.mutate,
+    logout,
+    isLoggingIn: loginMutation.isPending,
+    loginError: loginMutation.error,
+  };
+};

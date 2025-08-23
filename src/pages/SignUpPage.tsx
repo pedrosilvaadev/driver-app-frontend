@@ -1,33 +1,34 @@
 "use client";
 
 import { Car } from "lucide-react";
-import { useAuth } from "../hooks/useAuth";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
-import { LoginForm } from "@/components/loginForm";
+import { SignUpForm } from "@/components/signUpForm";
+import { useSignUp } from "@/hooks/useSignUp";
 
-const loginSchema = z.object({
+const signUpSchema = z.object({
+  name: z.string().min(1, "Name is required"),
   email: z.string().min(1, "Email is required").email("Invalid email"),
   password: z.string().min(1, "Password is required"),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type SignUpFormData = z.infer<typeof signUpSchema>;
 
-export const LoginPage = () => {
-  const { login, isLoggingIn, loginError } = useAuth();
+export const SignUpPage = () => {
+  const { signUp, signUpError, isSigningUp } = useSignUp();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    login(data);
+  const onSubmit = (data: SignUpFormData) => {
+    signUp(data);
   };
 
   return (
@@ -42,26 +43,14 @@ export const LoginPage = () => {
             Sign in to your driver account
           </p>
         </div>
-        <LoginForm
+        <SignUpForm
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           register={register}
           errors={errors}
-          isLoggingIn={isLoggingIn}
-          loginError={loginError}
+          isSigningUp={isSigningUp}
+          signUpError={signUpError}
         />
-
-        <div className="text-center">
-          <p className="mt-2 text-sm text-gray-600">
-            Don&apos;t have an account?{" "}
-            <a
-              href="/signup"
-              className="font-medium text-blue-600 hover:text-blue-500"
-            >
-              Sign up
-            </a>
-          </p>
-        </div>
       </div>
     </div>
   );
