@@ -1,12 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRides, acceptRide } from "../api/rides";
 import { useNavigate } from "react-router-dom";
-import { useRideStore } from "@/store/useRideStore";
 import { useState } from "react";
 
 export const useRides = () => {
   const queryClient = useQueryClient();
-  const { setActiveRide } = useRideStore();
   const navigate = useNavigate();
   const [acceptingRideId, setAcceptingRideId] = useState<number | null>(null);
 
@@ -21,7 +19,6 @@ export const useRides = () => {
       return acceptRide(rideId);
     },
     onSuccess: ({ ride }) => {
-      setActiveRide(ride.id);
       queryClient.invalidateQueries({ queryKey: ["rides"] });
       navigate(`/active-ride/${ride.id}`);
     },
