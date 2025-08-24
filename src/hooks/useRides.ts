@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRides, acceptRide } from "../api/rides";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const useRides = () => {
   const queryClient = useQueryClient();
@@ -20,10 +21,12 @@ export const useRides = () => {
     },
     onSuccess: ({ ride }) => {
       queryClient.invalidateQueries({ queryKey: ["rides"] });
+      toast.success("Ride accepted successfully!");
       navigate(`/active-ride/${ride.id}`);
     },
     onError: (error) => {
       console.error("Failed to accept ride:", error);
+      toast.error("Failed to accept ride.");
     },
   });
 

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRide, updateRideStatus } from "../api/rides";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const useActiveRide = (rideId: number) => {
   const queryClient = useQueryClient();
@@ -19,12 +20,15 @@ export const useActiveRide = (rideId: number) => {
       queryClient.setQueryData(["ride", rideId], { ride: updatedRide });
       queryClient.invalidateQueries({ queryKey: ["rides"] });
 
+      toast.success("Ride status updated successfully!");
+
       if (updatedRide.status === "dropped_off") {
         navigate("/rides");
       }
     },
     onError: (error) => {
       console.error("Failed to update ride status:", error);
+      toast.error("Failed to update ride status.");
     },
   });
 

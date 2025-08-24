@@ -110,7 +110,6 @@ export const ActiveRidePage = () => {
             updateStatus={({ status }) => updateStatus({ status })}
             isUpdating={isUpdating}
           />
-          "
         </div>
       </div>
     </div>

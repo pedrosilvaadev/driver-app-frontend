@@ -9,15 +9,18 @@ export const ButtonStatusRide = ({
   updateStatus: ({ status }: { status: "picked_up" | "dropped_off" }) => void;
   isUpdating: boolean;
 }) => {
+  console.log(status);
   const getActionButton = () => {
     if (status === "in_progress") {
-      <button
-        onClick={() => updateStatus({ status: "picked_up" })}
-        disabled={isUpdating}
-        className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-4 px-6 rounded-lg transition-colors text-lg"
-      >
-        {isUpdating ? "Updating..." : "Mark as Picked Up"}
-      </button>;
+      return (
+        <button
+          onClick={() => updateStatus({ status: "picked_up" })}
+          disabled={isUpdating}
+          className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-4 px-6 rounded-lg transition-colors text-lg"
+        >
+          {isUpdating ? "Updating..." : "Mark as Picked Up"}
+        </button>
+      );
     }
 
     if (status === "picked_up") {
@@ -52,5 +55,5 @@ export const ButtonStatusRide = ({
     return null;
   };
 
-  return getActionButton();
+  return <>{getActionButton()}</>;
 };
