@@ -5,8 +5,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
-import { SignUpForm } from "@/components/signUpForm";
 import { useSignUp } from "@/hooks/useSignUp";
+import { SignUpForm } from "@/components/SignUpForm";
+import type { MessageErrorAPI } from "@/types/domain";
 
 const signUpSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -49,7 +50,7 @@ export const SignUpPage = () => {
           register={register}
           errors={errors}
           isSigningUp={isSigningUp}
-          signUpError={signUpError}
+          signUpError={signUpError as MessageErrorAPI}
         />
       </div>
     </div>

@@ -6,7 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
-import { LoginForm } from "@/components/loginForm";
+import { LoginForm } from "@/components/LoginForm";
+import type { MessageErrorAPI } from "@/types/domain";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -48,7 +49,7 @@ export const LoginPage = () => {
           register={register}
           errors={errors}
           isLoggingIn={isLoggingIn}
-          loginError={loginError}
+          loginError={loginError as MessageErrorAPI}
         />
 
         <div className="text-center">

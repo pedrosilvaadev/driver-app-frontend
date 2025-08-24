@@ -6,6 +6,7 @@ import type {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import type { MessageErrorAPI } from "@/types/domain";
 
 interface FormProps {
   name: string;
@@ -18,7 +19,7 @@ interface SignUpFormProps {
   register: UseFormRegister<FormProps>;
   errors: FieldErrors<FormProps>;
   onSubmit: (data: FormProps) => void;
-  signUpError: Error | null;
+  signUpError: MessageErrorAPI;
   isSigningUp: boolean;
 }
 
@@ -75,7 +76,8 @@ export const SignUpForm = ({
 
       {signUpError && (
         <div className="text-red-600 text-sm text-center">
-          Sign up failed. Please check your input.
+          {signUpError.response?.data?.message ||
+            "An error occurred during sign up. Please try again."}
         </div>
       )}
 

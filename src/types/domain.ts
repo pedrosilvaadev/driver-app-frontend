@@ -42,3 +42,7 @@ export interface LoginResponse {
 export interface SignUpResponse {
   driver: Driver;
 }
+
+export interface MessageErrorAPI {
+  response?: { data?: { message?: string } };
+}

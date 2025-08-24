@@ -6,6 +6,7 @@ import type {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import type { MessageErrorAPI } from "@/types/domain";
 
 interface FormProps {
   email: string;
@@ -16,7 +17,7 @@ interface LoginFormProps {
   register: UseFormRegister<FormProps>;
   errors: FieldErrors<FormProps>;
   onSubmit: (data: FormProps) => void;
-  loginError: Error | null;
+  loginError: MessageErrorAPI;
   isLoggingIn: boolean;
 }
 export const LoginForm = ({
@@ -59,7 +60,8 @@ export const LoginForm = ({
 
       {loginError && (
         <div className="text-red-600 text-sm text-center">
-          Login failed. Please check your credentials.
+          {loginError.response?.data?.message ||
+            " Login failed. Please check your credentials."}
         </div>
       )}
 
