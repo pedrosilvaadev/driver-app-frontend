@@ -23,7 +23,6 @@ export const RidesPage = () => {
         queryClient.setQueryData<{ rides: Ride[] }>(
           ["rides"],
           (old = { rides: [] }) => {
-            console.log({ old });
             const rides = old.rides.filter(
               (ride) => ride.id !== event.payload.ride.id
             );
