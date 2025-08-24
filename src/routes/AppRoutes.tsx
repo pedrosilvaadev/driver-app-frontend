@@ -1,9 +1,10 @@
 import { LoginPage } from "@/pages/LoginPage";
 import { NotFound } from "@/pages/NotFound";
-import { RidesPage } from "@/pages/RidesPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { SignUpPage } from "@/pages/SignupPage";
+import { RidesPage } from "@/pages/RidesPage";
+import { SignUpPage } from "@/pages/SignUpPage";
+import { ActiveRidePage } from "@/pages/ActiveRidePage";
 
 export function AppRoutes() {
   return (
@@ -16,6 +17,14 @@ export function AppRoutes() {
         element={
           <ProtectedRoute>
             <RidesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/active-ride/:id"
+        element={
+          <ProtectedRoute>
+            <ActiveRidePage />
           </ProtectedRoute>
         }
       />
