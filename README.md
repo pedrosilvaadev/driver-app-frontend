@@ -2,6 +2,12 @@
 
 This repository contains the **Driver App MVP** for the URIDE. The solution is built with a **NestJS backend** and a **React frontend** using modern state management and real-time updates.
 
+![alt text](image-2.png)
+![alt text](image-1.png)
+![alt text](image.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+
 ---
 
 ## 🚗 Features
